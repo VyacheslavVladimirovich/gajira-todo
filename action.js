@@ -27,10 +27,15 @@ module.exports = class {
     const issuetypeName = argv.issuetype
     let tasks = []
 
+    console.log('commits')
+    console.log(githubEvent.commits)
+    console.log('commits length')
+    console.log(githubEvent.commits.length)
+    
     if (githubEvent.commits && githubEvent.commits.length > 0) {
       tasks = _.flatten(await this.findTodoInCommits(githubEvent.repository, githubEvent.commits))
     }
-
+    
     if (tasks.length === 0) {
       console.log('no TODO found')
 
@@ -111,6 +116,7 @@ module.exports = class {
   async findTodoInCommits (repo, commits) {
     return Promise.all(commits.map(async (c) => {
       const res = await this.GitHub.getCommitDiff(repo.full_name, c.id)
+      console.log(res)
       const rx = /(?:\/\/|#)\s+TODO:(.*)$/gm
 
       return getMatches(res, rx, 1)
