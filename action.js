@@ -37,7 +37,7 @@ module.exports = class {
     }
     
     if (tasks.length === 0) {
-      console.log('no TODO found')
+      console.log('no fkin TODO found')
 
       return
     }
