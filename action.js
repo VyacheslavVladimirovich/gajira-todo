@@ -26,18 +26,13 @@ module.exports = class {
     const projectKey = argv.project
     const issuetypeName = argv.issuetype
     let tasks = []
-
-    console.log('commits')
-    console.log(githubEvent.commits)
-    console.log('commits length')
-    console.log(githubEvent.commits.length)
     
     if (githubEvent.commits && githubEvent.commits.length > 0) {
       tasks = _.flatten(await this.findTodoInCommits(githubEvent.repository, githubEvent.commits))
     }
     
     if (tasks.length === 0) {
-      console.log('no fkin TODO found')
+      console.log('There is no TODO in commits. Well done!')
 
       return
     }
